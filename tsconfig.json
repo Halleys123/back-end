@@ -1,6 +1,6 @@
 {
-  "include": ["types/**/*.d.ts", "**/*.ts"],
-  "exclude": ["scripts", "dist", "tests", "docs", "build"],
+  "include": ["./types/**/*.d.ts", "**/*.ts"],
+  "exclude": ["./scripts", "./dist", "./tests"],
   "compilerOptions": {
     "target": "es2022",
     "module": "nodenext",

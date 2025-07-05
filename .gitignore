@@ -9,3 +9,5 @@ dist/*
 **/*.test.js
 scripts/**/*.js
 tests/**/*.test.js
+
+logs/**/*

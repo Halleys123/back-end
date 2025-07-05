@@ -9,6 +9,7 @@ export default [
    // 1) Main project files (excluding scripts)
    {
       files: ['**/*.ts', '**/*.tsx'],
+      ignores: ['scripts/**', 'tests/**', 'node_modules/**'],
       languageOptions: {
          parser,
          parserOptions: {
@@ -20,6 +21,15 @@ export default [
          '@typescript-eslint': eslintPlugin,
       },
       rules: {
+         'no-console': 'error',
+         'no-restricted-syntax': [
+            'error',
+            {
+               selector: "MemberExpression[object.name='console']",
+               message:
+                  'Please use `logger` object available globally instead of `console`.',
+            },
+         ],
          '@typescript-eslint/no-explicit-any': 'error',
          '@typescript-eslint/no-unnecessary-type-assertion': 'error',
          '@typescript-eslint/consistent-type-assertions': [
@@ -55,6 +65,8 @@ export default [
          '@typescript-eslint': eslintPlugin,
       },
       rules: {
+         'no-console': 'off',
+         'no-restricted-syntax': ['on'],
          '@typescript-eslint/no-explicit-any': 'error',
          '@typescript-eslint/no-unnecessary-type-assertion': 'error',
          '@typescript-eslint/consistent-type-assertions': [

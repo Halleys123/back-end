@@ -13,23 +13,24 @@
     "build:main": "tsc --project tsconfig.json",
     "build:scripts": "tsc --project scripts/tsconfig.json",
     "build:tests": "tsc --project tests/tsconfig.json",
-    "build:all": "npm run build:main && npm run build:scripts && npm run build:tests",
+    "build:all": "concurrently -n \"main,scripts,tests\" -c \"blue,magenta,cyan\" \"npm run build:main && echo \\x1b[34m[main]\\x1b[0m Build complete\" \"npm run build:scripts && echo \\x1b[35m[scripts]\\x1b[0m Build complete\" \"npm run build:tests && echo \\x1b[36m[tests]\\x1b[0m Build complete\"",
     "build": "npm run build:main",
     "-----------------": "--------------------------------------------------------------------------",
-    "tests:checkforfiles": "npm run build:scripts && node scripts/check-test.js",
+    "tests:checkforfiles": "npm run build:scripts && npx wait-on scripts/check-tests.js && node scripts/check-tests.js",
     "tests": "concurrently \"npm run build:tests\" \"npm run build:main\" && jest --config jest.config.js",
     "-------------------": "--------------------------------------------------------------------------",
     "lint": "eslint . --ext .ts",
     "pretty": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "--------------------": "--------------------------------------------------------------------------",
-    "dev": "concurrently \"tsc --watch --project tsconfig.json\" \"tsc --watch --project scripts/tsconfig.json\" \"nodemon dist/index.js\"",
+    "dev": "concurrently -n \"main,scripts,tests,server\" -c \"blue,magenta,cyan,green\" \"tsc --watch --project tsconfig.json\" \"tsc --watch --project ./scripts/tsconfig.json\" \"tsc --watch --project ./tests/tsconfig.json\" \"nodemon dist/server.js\"",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.0.1",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
@@ -42,6 +43,7 @@
     "eslint": "^9.30.1",
     "globals": "^16.3.0",
     "jest": "^30.0.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wait-on": "^8.0.3"
   }
 }
