@@ -43,38 +43,77 @@
 
 1. Can't use `as any` type.
 2. Can't use `any` type.
-3. You need to assign a type to every variable even parametes in function.
+3. Can't use console.log instead you need to use logger.
+4. You need to assign a type to every variable even parameters in function.
 
 ## Scripts
 
 ### Build Scripts
 
-These scripts compile TypeScript files into JavaScript.
+These scripts compile TypeScript files into JavaScript or clean build artifacts.
 
-```json
+```jsonc
+// Compiles main TypeScript sources
 "build:main": "tsc --project tsconfig.json",
+// Compiles scripts in the scripts directory
 "build:scripts": "tsc --project scripts/tsconfig.json",
+// Compiles test files in the tests directory
 "build:tests": "tsc --project tests/tsconfig.json",
-"build:all": "npm run build:main && npm run build:scripts && npm run build:tests",
+// Runs all builds in parallel with colored output (blue=main, magenta=scripts, cyan=tests)
+"build:all": "concurrently -n 'main,scripts,tests' -c 'blue,magenta,cyan' 'npm run build:main && echo [main] Build complete (blue)' 'npm run build:scripts && echo [scripts] Build complete (magenta)' 'npm run build:tests && echo [tests] Build complete (cyan)'",
+// Default build (main only)
 "build": "npm run build:main",
+// Removes all build files used only if user want to clean build artifacts
+"clean:build": "npm run build:scripts && node scripts/clean-build.js"
 ```
 
-### Linting, Formatting, and Testing Scripts
+### Linting, Formatting, and Type Checking Scripts
 
-Scripts for code quality, formatting, and running tests.
+Scripts for code quality, formatting, and type checking.
 
-```json
-"test": "npm run build:tests && npm run lint && npm run build:main && jest --config tests/jest.config.js",
+```jsonc
+// Lints all TypeScript files
 "lint": "eslint . --ext .ts",
+// Formats code using Prettier
 "pretty": "prettier --write .",
-"typecheck": "tsc --noEmit",
+// Checks TypeScript types without emitting files (emitting means generating .js files)
+"typecheck": "tsc --noEmit"
+```
+
+### Testing Scripts
+
+Scripts for running and checking tests.
+
+```jsonc
+// Checks for test files after building scripts
+// Used by CI pipeline to ensure test for each files exists and file for each test exists
+"tests:checkforfiles": "npm run build:scripts && npx wait-on scripts/check-tests.js && node scripts/check-tests.js",
+// Builds tests and main, then runs Jest
+"tests": "concurrently 'npm run build:tests' 'npm run build:main' && jest --config jest.config.js"
 ```
 
 ### Development and Start Scripts
 
 Scripts for development mode with live reloading and starting the app.
 
-```json
-"dev": "concurrently \"tsc --watch --project tsconfig.json\" \"tsc --watch --project scripts/tsconfig.json\" \"nodemon dist/index.js\"",
+```jsonc
+// Runs all builds in watch mode and starts the server with live reload (colors: blue=main, magenta=scripts, cyan=tests, green=server)
+"dev": "concurrently -n 'main,scripts,tests,server' -c 'blue,magenta,cyan,green' 'tsc --watch --project tsconfig.json' 'tsc --watch --project ./scripts/tsconfig.json' 'tsc --watch --project ./tests/tsconfig.json' 'nodemon dist/server.js'",
+// Starts the app from the built output
 "start": "node dist/index.js"
 ```
+
+## TODO
+
+-  [ ] Configure Jest
+   -  [ ] Jest should use build files from `dist` directory
+   -  [ ] The process will be first build `tests` and `project files` then run `jest` command
+   -  [ ] Jest tests will be present in the `tests` directory directly where the .ts files are located whereas project files are built in the `dist` directory so be careful about the relative paths.
+-  [ ] Add absolute path support for all
+-  [ ] Make a good CI pipeline
+   -  [ ] First step will be to run `tests:checkforfiles` script to ensure all test files exist for each source file and vice versa.
+   -  [ ] Second is to typecheck the project using `typecheck` script.
+   -  [ ] Third is to run `lint` script.
+   -  [ ] Then prettier
+   -  [ ] Then run jest tests
+   -  Even if one of these steps fails the pipeline should fail and merge is failed
