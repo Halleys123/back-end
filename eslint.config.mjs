@@ -66,7 +66,7 @@ export default [
       },
       rules: {
          'no-console': 'off',
-         'no-restricted-syntax': 'on',
+         'no-restricted-syntax': 'off',
          '@typescript-eslint/no-explicit-any': 'error',
          '@typescript-eslint/no-unnecessary-type-assertion': 'error',
          '@typescript-eslint/consistent-type-assertions': [
