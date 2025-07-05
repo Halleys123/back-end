@@ -16,7 +16,7 @@
     "build:all": "concurrently -n \"main,scripts,tests\" -c \"blue,magenta,cyan\" \"npm run build:main && echo \\x1b[34m[main]\\x1b[0m Build complete\" \"npm run build:scripts && echo \\x1b[35m[scripts]\\x1b[0m Build complete\" \"npm run build:tests && echo \\x1b[36m[tests]\\x1b[0m Build complete\"",
     "build": "npm run build:main",
     "-----------------": "--------------------------------------------------------------------------",
-    "tests:checkforfiles": "npm run build:scripts && npx wait-on scripts/check-tests.js && node scripts/check-tests.js",
+    "tests:checkforfiles": "npm run build:scripts && node scripts/check-tests.js",
     "tests": "concurrently \"npm run build:tests\" \"npm run build:main\" && jest --config jest.config.js",
     "-------------------": "--------------------------------------------------------------------------",
     "lint": "eslint . --ext .ts",
