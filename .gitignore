@@ -1,7 +1,11 @@
 package-lock.json
 node_modules
-scripts/**/*.js
+
+
 dist/*
 !dist/.gitkeep
+
 *.js.map
 **/*.test.js
+scripts/**/*.js
+tests/**/*.test.js
