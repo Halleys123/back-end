@@ -2,22 +2,22 @@
 
 ## Used Technologies
 
--  Node.js
--  TypeScript
--  Express.js
--  Jest
--  ESLint
--  Prettier
--  Docker
+- Node.js
+- TypeScript
+- Express.js
+- Jest
+- ESLint
+- Prettier
+- Docker
 
 ## Planned Technologies
 
--  Husky
--  MongoDB
--  Mongoose
--  Swagger
--  Kubernetes
--  Redis
+- Husky
+- MongoDB
+- Mongoose
+- Swagger
+- Kubernetes
+- Redis
 
 ## Prettier Rules
 
@@ -105,18 +105,18 @@ Scripts for development mode with live reloading and starting the app.
 
 ## TODO
 
--  [ ] Configure Jest
-   -  [ ] Jest should use build files from `dist` directory
-   -  [ ] The process will be first build `tests` and `project files` then run `jest` command
-   -  [ ] Jest tests will be present in the `tests` directory directly where the .ts files are located whereas project files are built in the `dist` directory so be careful about the relative paths.
--  [ ] Add absolute path support for all
--  [ ] Make a good CI pipeline
-   -  [ ] First step will be to run `tests:checkforfiles` script to ensure all test files exist for each source file and vice versa.
-   -  [ ] Second is to typecheck the project using `typecheck` script.
-   -  [ ] Third is to run `lint` script.
-   -  [ ] Then prettier
-   -  [ ] Then run jest tests
-   -  Even if one of these steps fails the pipeline should fail and merge is failed
--  [ ] Commit checks
-   -  [ ] Add husky to run `lint`, `typecheck`, and `tests:checkforfiles` scripts before commit (Maybe not important for now as that would hinder development speed)
-   -  [ ] Make sure that commit messages are done in `git commit -m "type" -m "message"` format, this will be checked using maybe `commitlint` or custom script
+- [ ] Configure Jest
+   - [ ] Jest should use build files from `dist` directory
+   - [ ] The process will be first build `tests` and `project files` then run `jest` command
+   - [ ] Jest tests will be present in the `tests` directory directly where the .ts files are located whereas project files are built in the `dist` directory so be careful about the relative paths.
+- [ ] Add absolute path support for all
+- [ ] Make a good CI pipeline
+   - [ ] First step will be to run `tests:checkforfiles` script to ensure all test files exist for each source file and vice versa.
+   - [ ] Second is to typecheck the project using `typecheck` script.
+   - [ ] Third is to run `lint` script.
+   - [ ] Then prettier
+   - [ ] Then run jest tests
+   - Even if one of these steps fails the pipeline should fail and merge is failed
+- [ ] Commit checks
+   - [ ] Add husky to run `lint`, `typecheck`, and `tests:checkforfiles` scripts before commit (Maybe not important for now as that would hinder development speed)
+   - [ ] Make sure that commit messages are done in `git commit -m "type" -m "message"` format, this will be checked using maybe `commitlint` or custom script

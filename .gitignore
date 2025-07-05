@@ -11,3 +11,5 @@ scripts/**/*.js
 tests/**/*.test.js
 
 logs/**/*
+
+**/*.env

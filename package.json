@@ -24,7 +24,8 @@
     "typecheck": "tsc --noEmit",
     "--------------------": "--------------------------------------------------------------------------",
     "dev": "concurrently -n \"main,scripts,tests,server\" -c \"blue,magenta,cyan,green\" \"tsc --watch --project tsconfig.json\" \"tsc --watch --project ./scripts/tsconfig.json\" \"tsc --watch --project ./tests/tsconfig.json\" \"nodemon dist/server.js\"",
-    "start": "node dist/index.js"
+    "start": "node dist/server.js",
+    "start:docker": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -43,6 +44,7 @@
     "eslint": "^9.30.1",
     "globals": "^16.3.0",
     "jest": "^30.0.4",
+    "prettier": "^3.6.2",
     "typescript": "^5.8.3",
     "wait-on": "^8.0.3"
   }
