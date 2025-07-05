@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "esbenp.prettier-vscode",
+    "docker.docker",
+    "aaron-bond.better-comments",
+    "pomdtr.excalidraw-editor"
+  ],
+  "unwantedRecommendations": []
+}
