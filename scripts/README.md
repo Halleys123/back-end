@@ -1,2 +1,2 @@
--  This folder should not contain any scripts that are used in production.
--  This folder will be ignored during the build process.
+- This folder should not contain any scripts that are used in production.
+- This folder will be ignored during the build process.

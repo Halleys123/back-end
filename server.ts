@@ -1,6 +1,8 @@
 import './utils/logger.js';
 import app from './app.js';
 
-app.listen(3000, () => {
-   logger.info('Listening on http://localhost:3000');
+const PORT: number | undefined = Number(process.env.SERVER_PORT) || 3000;
+
+app.listen(PORT, () => {
+   logger.info(`Listening on http://localhost:${PORT}`);
 });
