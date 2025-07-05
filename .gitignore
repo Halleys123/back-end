@@ -4,3 +4,4 @@ scripts/**/*.js
 dist/*
 !dist/.gitkeep
 *.js.map
+**/*.test.js
