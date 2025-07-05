@@ -117,3 +117,6 @@ Scripts for development mode with live reloading and starting the app.
    -  [ ] Then prettier
    -  [ ] Then run jest tests
    -  Even if one of these steps fails the pipeline should fail and merge is failed
+-  [ ] Commit checks
+   -  [ ] Add husky to run `lint`, `typecheck`, and `tests:checkforfiles` scripts before commit (Maybe not important for now as that would hinder development speed)
+   -  [ ] Make sure that commit messages are done in `git commit -m "type" -m "message"` format, this will be checked using maybe `commitlint` or custom script
