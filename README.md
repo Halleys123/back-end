@@ -109,7 +109,8 @@ Scripts for development mode with live reloading and starting the app.
    - [ ] Jest should use build files from `dist` directory
    - [ ] The process will be first build `tests` and `project files` then run `jest` command
    - [ ] Jest tests will be present in the `tests` directory directly where the .ts files are located whereas project files are built in the `dist` directory so be careful about the relative paths.
-- [ ] Add absolute path support for all
+- [ ] absolute path support
+   - [ ] Make sure that only absolute paths are used in the project, this will be done by configuring `tsconfig.json` and `eslint` to use absolute paths.
 - [ ] Make a good CI pipeline
    - [ ] First step will be to run `tests:checkforfiles` script to ensure all test files exist for each source file and vice versa.
    - [ ] Second is to typecheck the project using `typecheck` script.
