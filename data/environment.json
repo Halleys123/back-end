@@ -1,0 +1,26 @@
+[
+  {
+    "name": "SERVER_PORT",
+    "comment": "Port on which the server will run",
+    "sameLine": true,
+    "sampleValue": "3000"
+  },
+  {
+    "name": "NODE_ENV",
+    "comment": "production | development",
+    "sameLine": true,
+    "sampleValue": "development"
+  },
+  {
+    "name": "MONGO_URL",
+    "comment": "MongoDB connection string starts with mongodb://",
+    "sameLine": false,
+    "sampleValue": "mongodb://localhost:27017/myapp"
+  },
+  {
+    "name": "LOG_LEVEL",
+    "comment": "error || warn || info || http || verbose || debug || silly || success",
+    "sameLine": true,
+    "sampleValue": "development"
+  }
+]

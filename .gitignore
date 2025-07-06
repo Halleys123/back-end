@@ -13,3 +13,4 @@ tests/**/*.test.js
 logs/**/*
 
 **/*.env
+*.env

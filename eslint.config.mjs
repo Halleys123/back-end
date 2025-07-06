@@ -21,6 +21,8 @@ export default [
          '@typescript-eslint': eslintPlugin,
       },
       rules: {
+         // process.env
+         'no-process-env': 'error',
          'no-console': 'error',
          'no-restricted-syntax': [
             'error',

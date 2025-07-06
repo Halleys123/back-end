@@ -48,6 +48,27 @@
 
 ## Scripts
 
+### Generate Environment Variables
+
+These scripts are used to generate `.env` and `secrets.env` files based on the provided JSON files.
+
+```jsonc
+// Generates .env and secrets.env files based on data/environment.json and data/secrets.json
+"generate-env": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ false true",
+"generate-env:overwrite": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ true true",
+```
+
+You can also run the create-env script directly if you follow the steps below:
+
+1. Build the scripts directory using `npm run build:scripts`.
+2. Run the script with `node scripts/create-env.js ./ false true` to generate `.env` and `secrets.env` files.
+
+#### Info
+
+1. First parameter is the path where the `.env` and `secrets.env` files will be created.
+2. Second parameter is a boolean value that indicates whether to overwrite the existing files or not.
+3. Third parameter is a boolean value that indicates whether to use sample values from the JSON files or not.
+
 ### Build Scripts
 
 These scripts compile TypeScript files into JavaScript or clean build artifacts.
@@ -124,3 +145,4 @@ Scripts for development mode with live reloading and starting the app.
 - [ ] Environment Variable setup
    - [x] The project will by default use `.env` file for environment variables
    - [ ] If `.env` file has `NODE_ENV` variable, it will be used to determine the next `.${NODE_ENV}.env` file to load
+   - [x] Make a script that creates `.env` and `secrets.env` files based on the `data/environment.json` and `data/secrets.json` files

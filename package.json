@@ -1,6 +1,6 @@
 {
   "name": "back-end",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "server.js",
   "keywords": [],
   "author": "",
@@ -8,6 +8,9 @@
   "type": "module",
   "description": "",
   "scripts": {
+    "generate-env": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ false true",
+    "generate-env:overwrite": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ true true",
+    "------------------": "--------------------------------------------------------------------------",
     "clean:build": "npm run build:scripts && node scripts/clean-build.js",
     "----------------": "--------------------------------------------------------------------------",
     "build:main": "tsc --project tsconfig.json",

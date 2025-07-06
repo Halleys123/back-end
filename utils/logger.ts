@@ -79,7 +79,7 @@ const logger: winston.Logger = winston.createLogger({
                      levelBg = `\x1b[48;2;62;180;137m\x1b[30m${level}\x1b[0m`; // Mint rgb(62, 180, 137) bg, black text rgb
                      break;
                   case 'debug':
-                     levelBg = `\x1b[46m\x1b[30m${level}\x1b[0m`; // Cyan bg, black text
+                     levelBg = `\x1b[48;2;138;43;226m\x1b[30m${level}\x1b[0m`; // Blue Violet rgb(138, 43, 226), black text
                      break;
                   case 'verbose':
                      levelBg = `\x1b[45m\x1b[37m${level}\x1b[0m`; // Magenta bg, white text

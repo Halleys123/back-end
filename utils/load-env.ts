@@ -1,11 +1,12 @@
 import { config } from 'dotenv';
+import getEnv from './get-env.ts';
 
 (() => {
    try {
       logger.info('Loading environment variables...');
       config({ path: '.env' });
 
-      const nodeEnv: string | undefined = process.env.NODE_ENV;
+      const nodeEnv: string | undefined = getEnv('NODE_ENV');
       logger.silly('NODE_ENV:', nodeEnv);
       if (nodeEnv) {
          logger.debug(
@@ -14,6 +15,7 @@ import { config } from 'dotenv';
          config({ path: `.${nodeEnv}.env` });
       }
 
+      // eslint-disable-next-line no-process-env
       logger.success('Environment variables loaded:', process.env);
    } catch (error) {
       logger.error('Error loading environment variables:', error);
