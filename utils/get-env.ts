@@ -4,7 +4,7 @@ export default function getEnv(
    key: string,
    defaultValue?: string
 ): string | undefined {
-   logger.debug(`Fetching environment variable: ${key}`);
+   logger.debug(`Fetching environment variable: ${chalk.yellow(key)}`);
 
    if (!key || typeof key !== 'string') {
       throw new Error('Environment variable key must be a non-empty string');

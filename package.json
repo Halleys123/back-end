@@ -8,8 +8,8 @@
   "type": "module",
   "description": "",
   "scripts": {
-    "generate-env": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ false true",
-    "generate-env:overwrite": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ true true",
+    "create-env": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ false true",
+    "create-env:overwrite": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ true true",
     "------------------": "--------------------------------------------------------------------------",
     "clean:build": "npm run build:scripts && node scripts/clean-build.js",
     "----------------": "--------------------------------------------------------------------------",

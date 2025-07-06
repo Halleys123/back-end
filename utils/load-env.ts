@@ -6,6 +6,9 @@ import getEnv from './get-env.ts';
       logger.info('Loading environment variables...');
       config({ path: '.env' });
 
+      // Load secrets.env
+      config({ path: 'secrets.env' });
+
       const nodeEnv: string | undefined = getEnv('NODE_ENV');
       logger.silly('NODE_ENV:', nodeEnv);
       if (nodeEnv) {
@@ -19,6 +22,5 @@ import getEnv from './get-env.ts';
       logger.success('Environment variables loaded:', process.env);
    } catch (error) {
       logger.error('Error loading environment variables:', error);
-      throw error; // Re-throw the error to stop the application if env loading fails
    }
 })();

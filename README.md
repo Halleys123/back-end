@@ -54,8 +54,8 @@ These scripts are used to generate `.env` and `secrets.env` files based on the p
 
 ```jsonc
 // Generates .env and secrets.env files based on data/environment.json and data/secrets.json
-"generate-env": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ false true",
-"generate-env:overwrite": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ true true",
+"create-env": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ false true",
+"create-env:overwrite": "tsc --project ./scripts/tsconfig.json && node scripts/create-env.js ./ true true",
 ```
 
 You can also run the create-env script directly if you follow the steps below:
