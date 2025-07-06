@@ -122,5 +122,5 @@ Scripts for development mode with live reloading and starting the app.
    - [ ] Add husky to run `lint`, `typecheck`, and `tests:checkforfiles` scripts before commit (Maybe not important for now as that would hinder development speed)
    - [ ] Make sure that commit messages are done in `git commit -m "type" -m "message"` format, this will be checked using maybe `commitlint` or custom script
 - [ ] Environment Variable setup
-   - [ ] The project will by default use `.env` file for environment variables
+   - [x] The project will by default use `.env` file for environment variables
    - [ ] If `.env` file has `NODE_ENV` variable, it will be used to determine the next `.${NODE_ENV}.env` file to load

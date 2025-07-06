@@ -1,14 +1,26 @@
 import winston from 'winston';
 
-let logger: winston.Logger = winston.createLogger({
+winston.addColors({
+   error: 'red',
+   success: 'green',
+   warn: 'yellow',
+   info: 'cyan',
+   debug: 'blue',
+   verbose: 'magenta',
+   silly: 'white',
+});
+
+const logger: winston.Logger = winston.createLogger({
    levels: {
       error: 0,
-      warn: 1,
-      info: 2,
-      debug: 3,
-      verbose: 4,
-      silly: 5,
+      success: 1,
+      warn: 2,
+      info: 3,
+      debug: 4,
+      verbose: 5,
+      silly: 6,
    },
+   level: 'silly', // Set the default logging level
    transports: [
       // Console output should be in following format:
       // [level] [timestamp] [file]:[line] -> [message]
@@ -57,11 +69,14 @@ let logger: winston.Logger = winston.createLogger({
                   case 'error':
                      levelBg = `\x1b[41m\x1b[37m${level}\x1b[0m`; // Red bg, white text
                      break;
+                  case 'success':
+                     levelBg = `\x1b[48;2;128;255;0m\x1b[30m${level}\x1b[0m`; // Charteuse rgb(128, 255, 0) bg, black text
+                     break;
                   case 'warn':
                      levelBg = `\x1b[43m\x1b[30m${level}\x1b[0m`; // Yellow bg, black text
                      break;
                   case 'info':
-                     levelBg = `\x1b[42m\x1b[30m${level}\x1b[0m`; // Green bg, black text
+                     levelBg = `\x1b[48;2;62;180;137m\x1b[30m${level}\x1b[0m`; // Mint rgb(62, 180, 137) bg, black text rgb
                      break;
                   case 'debug':
                      levelBg = `\x1b[46m\x1b[30m${level}\x1b[0m`; // Cyan bg, black text
@@ -75,7 +90,7 @@ let logger: winston.Logger = winston.createLogger({
                   default:
                      levelBg = `\x1b[47m\x1b[30m${level}\x1b[0m`; // Default: white bg, black text
                }
-               const tsBg: string = `\x1b[44m\x1b[37m${timestamp}\x1b[0m`;
+               const tsBg: string = `\x1b[48;2;0;127;255m\x1b[38;2;255;255;255m${timestamp}\x1b[0m`;
                return `[${levelBg}] [${tsBg}] ${fileLine} -> ${info.message}`;
             })
          ),
@@ -90,6 +105,15 @@ let logger: winston.Logger = winston.createLogger({
       }),
    ],
 });
+
+// Add the 'success' method to the logger instance
+logger.success = function (
+   message: string,
+   ...meta: unknown[]
+): winston.Logger {
+   return this.log('success', message, ...meta);
+};
+
 if (!global.logger) {
    global.logger = logger;
 }
