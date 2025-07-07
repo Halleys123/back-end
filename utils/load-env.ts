@@ -1,13 +1,15 @@
 import { config } from 'dotenv';
 import getEnv from './get-env.ts';
 
+const suppressEnvLogs: boolean = true;
+
 (() => {
    try {
       logger.info('Loading environment variables...');
-      config({ path: '.env' });
+      config({ path: '.env', quiet: suppressEnvLogs });
 
       // Load secrets.env
-      config({ path: 'secrets.env' });
+      config({ path: 'secrets.env', quiet: suppressEnvLogs });
 
       const nodeEnv: string | undefined = getEnv('NODE_ENV');
       logger.silly('NODE_ENV:', nodeEnv);
@@ -15,7 +17,7 @@ import getEnv from './get-env.ts';
          logger.debug(
             'Unable to find NODE_ENV variable, using default .env file'
          );
-         config({ path: `.${nodeEnv}.env` });
+         config({ path: `.${nodeEnv}.env`, quiet: suppressEnvLogs });
       }
 
       // eslint-disable-next-line no-process-env

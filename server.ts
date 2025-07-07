@@ -7,7 +7,7 @@ import app from './app.js';
 const SERVER_PORT: number | string | undefined = getEnv('SERVER_PORT');
 
 if (!SERVER_PORT) {
-   logger.error(
+   logger.emerg(
       chalk.red(
          'Error: SERVER_PORT environment variable is not set.\nExiting...'
       )

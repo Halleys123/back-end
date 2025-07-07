@@ -1,0 +1,12 @@
+services:
+  app:
+    image: arnavchhabra/backend-template
+    container_name: backend-template
+    ports:
+      - "3000:3000"
+    volumes:
+      - D:/logs:/app/logs
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped

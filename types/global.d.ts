@@ -16,6 +16,7 @@ declare global {
 declare module 'winston' {
    interface Logger {
       success(message: string, ...meta: unknown[]): Logger;
+      emerg: LeveledLogMethod;
    }
 }
 export {};

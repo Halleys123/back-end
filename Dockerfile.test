@@ -1,0 +1,30 @@
+FROM node:23-alpine AS base
+
+WORKDIR /app
+
+COPY ./package.json .
+RUN npm install
+
+COPY . .
+
+ARG RUN_CHECKS=true
+
+# You can't build the image unless you follow the rules: 
+# typescript rules that are defined for each folder root, scripts and tests
+# Linting rules
+RUN if [ "$RUN_CHECKS" = "true" ]; then \
+      npm run pretty && \
+      npm run typecheck && \
+      npm run lint; \
+    else \
+      echo "Skipping pretty, typecheck, and lint"; \
+    fi
+
+# If you don't have test files for each file
+# If any of the test fails
+RUN if [ "$RUN_CHECKS" = "true" ]; then \
+      npm run tests:checkforfiles && \
+      npm run tests; \
+    else \
+      echo "Skipping tests"; \
+    fi

@@ -1,7 +1,16 @@
+import dotenv from 'dotenv';
 import winston from 'winston';
 
+dotenv.config({
+   path: '.env',
+   quiet: true,
+});
+// eslint-disable-next-line no-process-env
+const logLevel: string | undefined = process.env.LOG_LEVEL || 'silly';
+
 winston.addColors({
-   error: 'red',
+   emerg: 'bgRed white',
+   error: 'orange',
    success: 'green',
    warn: 'yellow',
    info: 'cyan',
@@ -12,42 +21,36 @@ winston.addColors({
 
 const logger: winston.Logger = winston.createLogger({
    levels: {
-      error: 0,
-      success: 1,
-      warn: 2,
-      info: 3,
-      debug: 4,
-      verbose: 5,
-      silly: 6,
+      emerg: 0,
+      error: 1,
+      success: 2,
+      warn: 3,
+      info: 4,
+      debug: 5,
+      verbose: 6,
+      silly: 7,
    },
-   level: 'silly', // Set the default logging level
+   level: 'error',
    transports: [
-      // Console output should be in following format:
-      // [level] [timestamp] [file]:[line] -> [message]
-      // level, timestamp should have background hightlight
       new winston.transports.Console({
          format: winston.format.combine(
             winston.format.timestamp({
                format: 'YYYY-MM-DD HH:mm:ss',
             }),
             winston.format.printf((info: winston.Logform.TransformableInfo) => {
-               // Get file:line from stack trace (user code, not logger)
                let fileLine: string = 'unknown:0';
                const err: Error = new Error();
                if (err.stack) {
                   const stack: string[] = err.stack.split('\n');
-                  // Find the first stack frame that does not include node_modules
                   const userFrame: string | undefined = stack.find(
                      (line: string) =>
                         line.includes('.js:') && !line.includes('node_modules')
                   );
                   if (userFrame) {
-                     // Extract file path and line number
                      const match: RegExpMatchArray | null = userFrame.match(
                         /\(([^)]+):(\d+):(\d+)\)/
                      );
                      if (match && match[1] && match[2]) {
-                        // Get last path segment (file name)
                         const fileName: string | undefined = match[1]
                            .split(/[\\/]/)
                            .pop();
@@ -55,31 +58,30 @@ const logger: winston.Logger = winston.createLogger({
                      }
                   }
                }
-               // Pad level to fixed width for consistent background
-               const LEVEL_WIDTH: number = 7;
+               const LEVEL_WIDTH: number = 9;
                const level: string = info.level
                   .toUpperCase()
                   .padEnd(LEVEL_WIDTH, ' ');
                const timestamp: string = String(info['timestamp']);
-               // ANSI background colors: 41=red, 42=green, 43=yellow, 44=blue, 45=magenta, 46=cyan, 47=white
-               // Remove color for fileLine, only color level/timestamp if desired
-               // Set background color based on log level
                let levelBg: string;
                switch (info.level) {
+                  case 'emerg':
+                     levelBg = `\x1b[41m\x1b[97m${level}\x1b[0m`; // Red bg, bright white text
+                     break;
                   case 'error':
-                     levelBg = `\x1b[41m\x1b[37m${level}\x1b[0m`; // Red bg, white text
+                     levelBg = `\x1b[41m\x1b[48;2;255;127;68m${level}\x1b[0m`; // orange bg rgba(255, 127, 68, 1), white text
                      break;
                   case 'success':
-                     levelBg = `\x1b[48;2;128;255;0m\x1b[30m${level}\x1b[0m`; // Charteuse rgb(128, 255, 0) bg, black text
+                     levelBg = `\x1b[48;2;128;255;0m\x1b[30m${level}\x1b[0m`; // Charteuse bg, black text
                      break;
                   case 'warn':
                      levelBg = `\x1b[43m\x1b[30m${level}\x1b[0m`; // Yellow bg, black text
                      break;
                   case 'info':
-                     levelBg = `\x1b[48;2;62;180;137m\x1b[30m${level}\x1b[0m`; // Mint rgb(62, 180, 137) bg, black text rgb
+                     levelBg = `\x1b[48;2;62;180;137m\x1b[30m${level}\x1b[0m`; // Mint bg, black text
                      break;
                   case 'debug':
-                     levelBg = `\x1b[48;2;138;43;226m\x1b[30m${level}\x1b[0m`; // Blue Violet rgb(138, 43, 226), black text
+                     levelBg = `\x1b[48;2;138;43;226m\x1b[30m${level}\x1b[0m`; // Blue Violet bg, black text
                      break;
                   case 'verbose':
                      levelBg = `\x1b[45m\x1b[37m${level}\x1b[0m`; // Magenta bg, white text
@@ -88,13 +90,15 @@ const logger: winston.Logger = winston.createLogger({
                      levelBg = `\x1b[47m\x1b[30m${level}\x1b[0m`; // White bg, black text
                      break;
                   default:
-                     levelBg = `\x1b[47m\x1b[30m${level}\x1b[0m`; // Default: white bg, black text
+                     levelBg = `\x1b[47m\x1b[30m${level}\x1b[0m`;
                }
                const tsBg: string = `\x1b[48;2;0;127;255m\x1b[38;2;255;255;255m${timestamp}\x1b[0m`;
+
+               // Color emerg message text as well
                return `[${levelBg}] [${tsBg}] ${fileLine} -> ${info.message}`;
             })
          ),
-         level: 'debug', // Set to 'debug' to capture all levels
+         level: logLevel,
       }),
       new winston.transports.File({
          filename: `logs/${new Date().toISOString().split('T')[0]}.log`,
@@ -106,12 +110,22 @@ const logger: winston.Logger = winston.createLogger({
    ],
 });
 
-// Add the 'success' method to the logger instance
+// Add the 'success' and 'emerg' methods to the logger instance
 logger.success = function (
    message: string,
    ...meta: unknown[]
 ): winston.Logger {
    return this.log('success', message, ...meta);
+};
+
+logger.emerg = function (
+   message: string | object,
+   ...meta: unknown[]
+): winston.Logger {
+   if (typeof message === 'object') {
+      message = JSON.stringify(message, null, 2);
+   }
+   return this.log('emerg', message, ...meta);
 };
 
 if (!global.logger) {

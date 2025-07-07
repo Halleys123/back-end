@@ -7,7 +7,11 @@ export default function getEnv(
    logger.debug(`Fetching environment variable: ${chalk.yellow(key)}`);
 
    if (!key || typeof key !== 'string') {
-      throw new Error('Environment variable key must be a non-empty string');
+      logger.emerg(
+         `Server side error: Invalid environment variable key: ${key}`
+      );
+      logger.emerg('Exiting process due to critical error');
+      process.exit(1);
    }
 
    // eslint-disable-next-line no-process-env

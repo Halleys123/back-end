@@ -19,7 +19,7 @@
   },
   {
     "name": "LOG_LEVEL",
-    "comment": "error || warn || info || http || verbose || debug || silly || success",
+    "comment": "emerg || error || success || warn || info || http || verbose || debug || silly",
     "sameLine": true,
     "sampleValue": "development"
   }

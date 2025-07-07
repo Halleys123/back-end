@@ -6,29 +6,7 @@ COPY ./package.json .
 RUN npm install
 
 COPY . .
-
-ARG RUN_CHECKS=true
-
-# You can't build the image unless you follow the rules: 
-# typescript rules that are defined for each folder root, scripts and tests
-# Linting rules
-RUN if [ "$RUN_CHECKS" = "true" ]; then \
-      npm run pretty && \
-      npm run typecheck && \
-      npm run lint; \
-    else \
-      echo "Skipping pretty, typecheck, and lint"; \
-    fi
-
-# If you don't have test files for each file
-# If any of the test fails
-RUN if [ "$RUN_CHECKS" = "true" ]; then \
-      npm run tests:checkforfiles && \
-      npm run tests; \
-    else \
-      echo "Skipping tests"; \
-    fi
-
+RUN npm run build
 
 FROM alpine:3.19
 
@@ -44,12 +22,13 @@ COPY --from=0 /app/dist .
 EXPOSE 3000
 VOLUME /app/logs
 
+# start:docker script was used because the default location of server.js changed from /app/dist/server.js to /app/server.js in final build
 CMD [ "npm", "run", "start:docker" ]
 
 # 1
-# docker build -t arnavchhabra/backend-template .
+# docker build -t arnavchhabra/backend-template --build-arg RUN_CHECKS=false .
 
 # 2
-# docker run -d --rm --name backend-template -p 3000:3000 arnavchhabra/backend-template --volume D:/logs:/app/logs
+# docker run -d --rm --name backend-template -p 3000:3000 --volume D:/logs:/app/logs  arnavchhabra/backend-template
 # or
 # docker run -d --rm --name backend-template -p 3000:3000 --mount type=bind,src="D:/logs",dst=/app/logs arnavchhabra/backend-template
