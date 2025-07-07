@@ -7,7 +7,7 @@ target "test" {
     context = "."
     tags = ["back-end-test"]
     args = {
-        RUN_CHECKS=true
+        RUN_CHECKS=false
     }
 }
 

@@ -8,5 +8,4 @@ services:
       - D:/logs:/app/logs
     environment:
       - NODE_ENV=production
-      - PORT=3000
-    restart: unless-stopped
+      - SERVER_PORT=3000
