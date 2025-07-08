@@ -1,5 +1,12 @@
 # Back-end Template
 
+To Start working on this project:
+
+1. Clone and run `npm install` to install all dependencies.
+2. Modify `data/environment.json` and `data/secrets.json` files to set your environment variables, this will allow other users to easily generate their own `.env` files.
+3. Run `npm run create-env` to generate `.env` and `secrets.env` files based on the provided JSON files.
+4. Run `npm run dev` to start the development server with live reloading.
+
 ## Used Technologies
 
 - Node.js
